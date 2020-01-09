@@ -6,7 +6,7 @@
 Summary: A version control system
 Name: cvs
 Version: 1.11.23
-Release: 15%{?dist}
+Release: 16%{?dist}
 License: GPL+ and GPLv2+ and LGPL+
 Group: Development/Tools
 Source0: ftp://ftp.gnu.org/non-gnu/cvs/source/stable/%{version}/cvs-%{version}.tar.bz2
@@ -52,6 +52,10 @@ Patch21: cvs-1.11.23-sanity.patch
 Patch22: cvs-1.11.23-cve-2010-3846.patch
 # CVE-2012-0804, bug #784339
 Patch23: cvs-1.11.23-CVE-2012-0804-Fix-proxy-response-parser.patch
+# Bug #671460
+Patch24: cvs-1.11.23-Allow-CVS-server-to-use-any-Kerberos-key-with-cvs-se.patch
+# Bug #684789
+Patch25: cvs-1.11.23-Set-PAM_TTY-and-PAM_RHOST-on-PAM-authentication.patch
 
 
 %description
@@ -109,6 +113,8 @@ provides configuration for xinetd.
 %patch21 -p1 -b .sanity
 %patch22 -p1 -b .cve-2010-3846
 %patch23 -p1 -b .cve-2012-0804
+%patch24 -p1 -b .krb_no_hostname
+%patch25 -p1 -b .set_pam_rhost
 
 # Apply a patch to the generated files, OR
 # run autoreconf and require autoconf >= 2.58, automake >= 1.7.9
@@ -192,6 +198,11 @@ fi
 %config(noreplace) %{_sysconfdir}/xinetd.d/%{name}
 
 %changelog
+* Fri Jun 21 2013 Petr Pisar <ppisar@redhat.com> - 1.11.23-16
+- Allow CVS server to use any Kerberos key with cvs service name
+  (Resolves: #671460)
+- Set PAM_TTY and PAM_RHOST on PAM authentication (Resolves: #684789)
+
 * Thu Jul 12 2012 Petr Pisar <ppisar@redhat.com> - 1.11.23-15
 - Deliver xinetd configuration as a sub-package requiring xinetd 
   (Resolves: #695719)
