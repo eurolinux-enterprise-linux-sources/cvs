@@ -5,7 +5,7 @@
 
 Name: cvs
 Version: 1.11.23
-Release: 32%{?dist}
+Release: 35%{?dist}
 Summary: Concurrent Versions System
 Group: Development/Tools
 URL: http://cvs.nongnu.org/
@@ -42,7 +42,7 @@ BuildRequires: texinfo
 BuildRequires: systemd
 
 # Fix up initial cvs login, bug #47457
-Patch0: cvs-1.11.22-cvspass.patch
+Patch0: cvs-1.11.23-cvspass.patch
 # Build against system zlib
 Patch1: cvs-1.11.19-extzlib.patch
 # Aadd 't' as a loginfo format specifier (print tag or branch name)
@@ -286,6 +286,15 @@ exit 0
 
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.11.23-35
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.11.23-34
+- Mass rebuild 2013-12-27
+
+* Wed Dec 04 2013 Petr Pisar <ppisar@redhat.com> - 1.11.23-33
+- Fix editor-log-file1 and parseroot-3r tests (bug #1037997)
+
 * Wed Oct 23 2013 Petr Pisar <ppisar@redhat.com> - 1.11.23-32
 - Harden build for cvs in server role (bug #983164)
 - Add cvs.sh(5) manual page (bug #983164)
