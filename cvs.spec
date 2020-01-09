@@ -6,7 +6,7 @@
 Summary: A version control system
 Name: cvs
 Version: 1.11.23
-Release: 11%{?dist}.1
+Release: 15%{?dist}
 License: GPL+ and GPLv2+ and LGPL+
 Group: Development/Tools
 Source0: ftp://ftp.gnu.org/non-gnu/cvs/source/stable/%{version}/cvs-%{version}.tar.bz2
@@ -48,9 +48,9 @@ Patch19: cvs-1.11.23-getline64.patch
 Patch20: cvs-1.11.22-stdinargs.patch
 # Bug #530097
 Patch21: cvs-1.11.23-sanity.patch
-# CVE-2010-3864, bug #644813
+# CVE-2010-3864, bug #644814
 Patch22: cvs-1.11.23-cve-2010-3846.patch
-# CVE-2012-0804, bug #784338
+# CVE-2012-0804, bug #784339
 Patch23: cvs-1.11.23-CVE-2012-0804-Fix-proxy-response-parser.patch
 
 
@@ -68,6 +68,18 @@ directory, CVS provides version control for a hierarchical collection
 of directories consisting of revision controlled files. These
 directories and files can then be combined together to form a software
 release.
+
+%package inetd
+Summary: CVS server configuration for xinetd
+Group: Development/Tools
+License: GPL+
+BuildArch: noarch
+Requires: %{name} = %{version}-%{release}
+Requires: xinetd
+
+%description inetd
+CVS server can be run locally, via remote shell or by inetd. This package
+provides configuration for xinetd.
 
 %prep
 %setup -q
@@ -171,17 +183,27 @@ fi
 %{_mandir}/*/*
 %{_infodir}/*.info*
 %{_datadir}/%{name}
-%config(noreplace) %{_sysconfdir}/xinetd.d/%{name}
 %dir %{_localstatedir}/%{name}
 %config(noreplace) %{_sysconfdir}/pam.d/*
 %config(noreplace) %{_sysconfdir}/profile.d/*
 
-%changelog
-* Wed Feb 01 2012 Petr Pisar <ppisar@redhat.com> - 1.11.23-11.el6_2.1
-- Fix CVE-2012-0804 (Resolves: #784338)
+%files inetd
+%defattr(-,root,root)
+%config(noreplace) %{_sysconfdir}/xinetd.d/%{name}
 
-* Wed Oct 20 2010 Petr Pisar <ppisar@redhat.com> - 1.11.23-11.el6_0.1
-- Fix CVE-2010-3846 (Resolves: #644813)
+%changelog
+* Thu Jul 12 2012 Petr Pisar <ppisar@redhat.com> - 1.11.23-15
+- Deliver xinetd configuration as a sub-package requiring xinetd 
+  (Resolves: #695719)
+
+* Wed Jul 11 2012 Petr Pisar <ppisar@redhat.com> - 1.11.23-14
+- Fix csh profile file syntax (Resolves: #671145)
+
+* Wed Feb 01 2012 Petr Pisar <ppisar@redhat.com> - 1.11.23-13
+- Fix CVE-2012-0804 (Resolves: #784339)
+
+* Wed Oct 20 2010 Petr Pisar <ppisar@redhat.com> - 1.11.23-12
+- Fix CVE-2010-3846 (Resolves: #644814)
 
 * Wed Apr 21 2010 Petr Pisar <ppisar@redhat.com> 1.11.23-11
 - Fix sanity check test suite (getopt quotation and file mode listing) as per
