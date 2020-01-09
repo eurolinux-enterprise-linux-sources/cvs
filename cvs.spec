@@ -50,6 +50,8 @@ Patch20: cvs-1.11.22-stdinargs.patch
 Patch21: cvs-1.11.23-sanity.patch
 # CVE-2010-3864, bug #644813
 Patch22: cvs-1.11.23-cve-2010-3846.patch
+# CVE-2012-0804, bug #784338
+Patch23: cvs-1.11.23-CVE-2012-0804-Fix-proxy-response-parser.patch
 
 
 %description
@@ -94,6 +96,7 @@ release.
 %patch20 -p1 -b .stdinargs
 %patch21 -p1 -b .sanity
 %patch22 -p1 -b .cve-2010-3846
+%patch23 -p1 -b .cve-2012-0804
 
 # Apply a patch to the generated files, OR
 # run autoreconf and require autoconf >= 2.58, automake >= 1.7.9
@@ -174,6 +177,9 @@ fi
 %config(noreplace) %{_sysconfdir}/profile.d/*
 
 %changelog
+* Wed Feb 01 2012 Petr Pisar <ppisar@redhat.com> - 1.11.23-11.el6_2.1
+- Fix CVE-2012-0804 (Resolves: #784338)
+
 * Wed Oct 20 2010 Petr Pisar <ppisar@redhat.com> - 1.11.23-11.el6_0.1
 - Fix CVE-2010-3846 (Resolves: #644813)
 
